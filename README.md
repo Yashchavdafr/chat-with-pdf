@@ -2,8 +2,7 @@
 # 💬 Chat with PDF — AI Document Q&A
 
 > Upload any PDF. Ask anything. Get instant answers with source references.
-
-![Demo GIF](assets/demo.gif)
+<!-- ![Demo GIF](assets/demo.gif) -->
 
 ## ✨ Features
 - 📄 Upload any PDF document (reports, contracts, research papers)
