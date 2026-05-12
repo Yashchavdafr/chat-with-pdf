@@ -1,0 +1,393 @@
+/* ============================================================
+   Chat with PDF — Dark Glassmorphism UI · Sprint 3 Redesign
+   Injected via st.markdown()
+   ============================================================ */
+
+/* ── Google Fonts ─────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+/* ── CSS Variables ────────────────────────────────────────── */
+:root {
+  --bg-start:       #060b18;
+  --bg-mid:         #0a1128;
+  --bg-end:         #0d1640;
+  --glass:          rgba(255, 255, 255, 0.04);
+  --glass-border:   rgba(255, 255, 255, 0.10);
+  --indigo:         #6366f1;
+  --indigo-glow:    rgba(99, 102, 241, 0.35);
+  --cyan:           #06b6d4;
+  --cyan-glow:      rgba(6, 182, 212, 0.25);
+  --text-primary:   #ffffff;
+  --text-muted:     rgba(255, 255, 255, 0.5);
+  --radius:         20px;
+  --radius-sm:      14px;
+}
+
+/* ── Keyframe Animations ──────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes gradientShift {
+  0%   { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(99, 102, 241, 0.5); }
+  50%      { border-color: rgba(6, 182, 212, 0.7);   }
+}
+
+@keyframes spinRing {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes orbPulse {
+  0%, 100% { r: 30; opacity: 1;    }
+  50%      { r: 32; opacity: 0.85; }
+}
+
+@keyframes floatDot {
+  0%, 100% { transform: translateY(0);    }
+  50%      { transform: translateY(-6px); }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: translateY(0);     }
+  40%           { transform: translateY(-10px);  }
+}
+
+@keyframes gradientSweep {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes iconPulse {
+  0%, 100% { filter: drop-shadow(0 0 6px  var(--indigo-glow)); }
+  50%      { filter: drop-shadow(0 0 18px var(--cyan-glow));   }
+}
+
+/* ── Global Reset / Page Background ──────────────────────── */
+body, .stApp {
+  background: linear-gradient(135deg, #060b18 0%, #0a1128 50%, #0d1640 100%) !important;
+  min-height: 100vh;
+}
+
+html, body, [data-testid="stAppViewContainer"] {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-mid) 50%, var(--bg-end) 100%);
+  background-attachment: fixed;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Hide Streamlit chrome */
+#MainMenu, footer, header { visibility: hidden; }
+section[data-testid="stSidebar"] { display: none !important; }
+header[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stDecoration"],
+[data-testid="collapsedControl"] { display: none !important; }
+
+/* Layout reset */
+.block-container {
+  padding-top: 2rem !important;
+  max-width: 100% !important;
+}
+
+[data-testid="stAppViewContainer"] > section > div:first-child {
+  padding-top: 0 !important;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--indigo-glow);
+  border-radius: 99px;
+}
+
+/* ── Hero Icon Container ─────────────────────────────────── */
+.hero-icon {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+/* ── Hero Title ──────────────────────────────────────────── */
+.hero-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  margin: 0 0 12px;
+  line-height: 1.15;
+}
+
+/* Animated gradient word */
+.gradient-word {
+  background: linear-gradient(90deg, #6366f1, #06b6d4, #6366f1);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s linear infinite;
+}
+
+/* ── Subheadline ─────────────────────────────────────────── */
+.hero-sub {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.05rem;
+  margin: 0 0 36px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── Upload Card — Glassmorphism with gradient border ──── */
+.upload-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-radius: 20px;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 32px 28px;
+  box-shadow: 0 0 40px rgba(99, 102, 241, 0.08),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.upload-card:hover {
+  border-color: rgba(99, 102, 241, 0.6);
+  box-shadow: 0 0 60px rgba(99, 102, 241, 0.15),
+              inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Upload zone inner dashed border */
+[data-testid="stFileUploadDropzone"] {
+  border: 2px dashed rgba(99, 102, 241, 0.5) !important;
+  border-radius: 14px !important;
+  background: rgba(99, 102, 241, 0.04) !important;
+  transition: all 0.3s ease;
+  animation: borderPulse 3s ease-in-out infinite;
+}
+
+[data-testid="stFileUploadDropzone"]:hover {
+  border-color: #06b6d4 !important;
+  background: rgba(6, 182, 212, 0.06) !important;
+  transform: scale(1.01);
+}
+
+/* Upload hint text */
+.upload-hint {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  text-align: center;
+  margin: 8px 0 0;
+}
+
+/* Override Streamlit file uploader styling */
+[data-testid="stFileUploader"] {
+  width: 100%;
+}
+
+/* ── Progress / Status ────────────────────────────────────── */
+.status-card {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+  width: 100%;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  animation: slideUp 0.35s ease-out;
+  margin-top: 16px;
+}
+
+.status-label {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+/* Animated progress bar */
+[data-testid="stProgress"] > div > div {
+  background: linear-gradient(90deg, var(--indigo), var(--cyan), var(--indigo));
+  background-size: 200% 100%;
+  animation: gradientSweep 1.8s linear infinite;
+  border-radius: 99px;
+}
+
+/* ── Top Bar (Chat Screen) ────────────────────────────────── */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: rgba(10, 15, 30, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.doc-icon {
+  font-size: 24px;
+  animation: iconPulse 4s ease-in-out infinite;
+}
+
+.doc-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* ── Memory Badge ─────────────────────────────────────────── */
+.memory-badge {
+  font-size: 11px;
+  color: rgba(6, 182, 212, 0.8);
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.2);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+  display: inline-block;
+}
+
+/* ── Chat Area ────────────────────────────────────────────── */
+.chat-area {
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: calc(100vh - 140px);
+}
+
+/* ── Chat Bubbles ─────────────────────────────────────────── */
+.user-bubble {
+  background: linear-gradient(135deg, #4338ca, #6366f1);
+  border-radius: 18px 18px 4px 18px;
+  padding: 12px 18px;
+  margin: 8px 0;
+  color: white;
+  font-size: 0.95rem;
+  max-width: 75%;
+  margin-left: auto;
+  box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+  animation: slideUp 0.35s ease-out;
+  line-height: 1.6;
+}
+
+.assistant-bubble {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 18px 18px 18px 4px;
+  border-left: 3px solid #06b6d4;
+  padding: 12px 18px;
+  margin: 8px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  max-width: 80%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.35s ease-out;
+  line-height: 1.6;
+}
+
+.bubble-sources {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* ── Thinking Dots ────────────────────────────────────────── */
+.thinking-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-left: 3px solid var(--cyan);
+  border-radius: var(--radius);
+  width: fit-content;
+  animation: slideUp 0.35s ease-out;
+}
+
+.thinking-dots span {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #6366f1;
+  border-radius: 50%;
+  margin: 0 3px;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+
+.thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Legacy dot class support */
+.dot {
+  width: 8px;
+  height: 8px;
+  background: var(--cyan);
+  border-radius: 50%;
+  animation: bounce 1.2s ease-in-out infinite;
+}
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.stButton > button {
+  background: rgba(99, 102, 241, 0.15) !important;
+  border: 1px solid rgba(99, 102, 241, 0.4) !important;
+  color: var(--text-primary) !important;
+  border-radius: var(--radius-sm) !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 0.875rem !important;
+  padding: 8px 18px !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease !important;
+}
+.stButton > button:hover {
+  background: rgba(99, 102, 241, 0.30) !important;
+  box-shadow: 0 0 20px var(--indigo-glow) !important;
+  transform: scale(1.02) !important;
+}
+.stButton > button:active {
+  transform: scale(0.97) !important;
+}
+
+/* ── Chat Input ───────────────────────────────────────────── */
+[data-testid="stChatInput"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid var(--glass-border) !important;
+  border-radius: var(--radius-sm) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+}
+[data-testid="stChatInput"]:focus-within {
+  border-color: var(--indigo) !important;
+  box-shadow: 0 0 16px var(--indigo-glow) !important;
+}
+[data-testid="stChatInput"] textarea {
+  color: var(--text-primary) !important;
+  font-family: 'Inter', sans-serif !important;
+}
