@@ -16,7 +16,7 @@ title: Chat with PDF
 - 🌐 Fully deployed — no installation needed
 
 ## 🚀 Live Demo
-**[Try it here →](YOUR_STREAMLIT_URL)**
+**[Try it here →](https://chat-with-pdf-mwzpf2odf8voxdd8h3gb52.streamlit.app/)**
 
 ## 🛠️ Tech Stack
 | Layer | Technology |
