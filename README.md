@@ -1,4 +1,7 @@
 ---
+title: Chat with PDF
+---
+
 # 💬 Chat with PDF — AI Document Q&A
 
 > Upload any PDF. Ask anything. Get instant answers with source references.
